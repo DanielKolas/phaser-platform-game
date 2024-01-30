@@ -15,15 +15,15 @@ class Play extends Phaser.Scene {
         const layers = this.createLayers(map);
         const player = this.createPlayer();
 
-        this.physics.add.collider(player, layers.platformColliders);
-
-
+        player.addColider(layers.platformColliders);
     }
+
     createMap(){
         const map = this.make.tilemap({key: "map"});
         map.addTilesetImage("main_lev_build_1","tiles-1");
         return map;
     }
+
     createLayers(map){
         const tileset = map.getTileset("main_lev_build_1");
         const platformColliders = map.createStaticLayer("platforms_colliders", tileset);
