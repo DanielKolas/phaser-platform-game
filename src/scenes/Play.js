@@ -15,13 +15,13 @@ class Play extends Phaser.Scene {
         const map = this.createMap();
         const layers = this.createLayers(map);
         const playerZones = this.getPlayerZones(layers.playerZones);
-        const player = this.createPlayer(playerZones);
+        const player = this.createPlayer(playerZones.start);
 
         this.createPlayerColliders(player, {
             colliders: {
                 platformsColliders: layers.platformsColliders
         }});
-
+        this.createEndOfLevel(playerZones.end, player);
         this.setUpFollowupCameraOn(player);
     }
 
@@ -42,7 +42,7 @@ class Play extends Phaser.Scene {
         return {environment, platforms, platformsColliders, playerZones };
     }
 
-    createPlayer({start}) {
+    createPlayer(start) {
         return new Player(this, start.x, start.y);
     }
 
@@ -63,6 +63,15 @@ class Play extends Phaser.Scene {
             start: playerZones.find(zone => zone.name === 'startZone'),
             end: playerZones.find(zone => zone.name === 'endZone')
         }
+    }
+    createEndOfLevel(end, player){
+        const endOfLevel =  this.physics.add.sprite(end.x, end.y, "end")
+            .setSize(5, 300)
+            .setOrigin(0.5, 1)
+        const EOLoverlap = this.physics.add.overlap(player, endOfLevel, () =>{
+            EOLoverlap.active = false;
+            console.log("player has won");
+        })
     }
 }
 
