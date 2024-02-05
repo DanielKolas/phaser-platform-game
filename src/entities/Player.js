@@ -21,6 +21,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.consecutiveJumps = 1;
         this.cursors = this.scene.input.keyboard.createCursorKeys();
         this.body.setGravityY(this.gravity);
+        this.body.setSize(20, 36);
         this.setCollideWorldBounds(true);
         this.setOrigin(0.5, 1);
         initPlayerAnims(this.scene.anims);
